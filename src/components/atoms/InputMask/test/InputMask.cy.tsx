@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { InputMaskComponent } from '../InputMask';
+import { InputMask } from '../InputMask';
 
 const CPF_MASK = '999.999.999-99';
 const CPF_LABEL = 'CPF';
@@ -10,9 +8,7 @@ const BE_VISIBLE = 'be.visible';
 
 describe('<InputMask />', () => {
   it('should render input mask with default props', () => {
-    cy.mount(
-      <InputMaskComponent mask={CPF_MASK} placeholder={ENTER_CPF_PLACEHOLDER} />
-    );
+    cy.mount(<InputMask mask={CPF_MASK} placeholder={ENTER_CPF_PLACEHOLDER} />);
     cy.get(INPUT_SELECTOR).should(BE_VISIBLE);
     cy.get(INPUT_SELECTOR).should(
       'have.attr',
@@ -23,7 +19,7 @@ describe('<InputMask />', () => {
 
   it('should render input mask with label', () => {
     cy.mount(
-      <InputMaskComponent
+      <InputMask
         mask={CPF_MASK}
         label={CPF_LABEL}
         placeholder={ENTER_CPF_PLACEHOLDER}
@@ -34,21 +30,21 @@ describe('<InputMask />', () => {
   });
 
   it('should show required indicator when required', () => {
-    cy.mount(<InputMaskComponent mask={CPF_MASK} label={CPF_LABEL} required />);
+    cy.mount(<InputMask mask={CPF_MASK} label={CPF_LABEL} required />);
     cy.contains('label', CPF_LABEL).should(BE_VISIBLE);
     cy.contains('*').should(BE_VISIBLE);
   });
 
   it('should display error message', () => {
     const ERROR_MESSAGE = 'This field is required';
-    cy.mount(<InputMaskComponent mask={CPF_MASK} error={ERROR_MESSAGE} />);
+    cy.mount(<InputMask mask={CPF_MASK} error={ERROR_MESSAGE} />);
     cy.contains(ERROR_MESSAGE).should(BE_VISIBLE);
     cy.get(INPUT_SELECTOR).should('have.class', 'border-status-error-text');
   });
 
   it('should display helper text when no error', () => {
     const HELPER_TEXT = 'Enter your CPF';
-    cy.mount(<InputMaskComponent mask={CPF_MASK} helperText={HELPER_TEXT} />);
+    cy.mount(<InputMask mask={CPF_MASK} helperText={HELPER_TEXT} />);
     cy.contains(HELPER_TEXT).should(BE_VISIBLE);
   });
 
@@ -56,7 +52,7 @@ describe('<InputMask />', () => {
     const ERROR_MESSAGE = 'Error';
     const HELPER_TEXT = 'Helper text';
     cy.mount(
-      <InputMaskComponent
+      <InputMask
         mask={CPF_MASK}
         error={ERROR_MESSAGE}
         helperText={HELPER_TEXT}
@@ -68,19 +64,17 @@ describe('<InputMask />', () => {
 
   it('should accept custom className', () => {
     const CUSTOM_CLASS_NAME = 'custom-class';
-    cy.mount(
-      <InputMaskComponent mask={CPF_MASK} className={CUSTOM_CLASS_NAME} />
-    );
+    cy.mount(<InputMask mask={CPF_MASK} className={CUSTOM_CLASS_NAME} />);
     cy.get(INPUT_SELECTOR).should('have.class', CUSTOM_CLASS_NAME);
   });
 
   it('should handle mask formatting', () => {
-    cy.mount(<InputMaskComponent mask={CPF_MASK} value="12345678901" />);
+    cy.mount(<InputMask mask={CPF_MASK} value="12345678901" />);
     cy.get(INPUT_SELECTOR).should('exist');
   });
 
   it('should handle different mask patterns', () => {
-    cy.mount(<InputMaskComponent mask="99/99/9999" placeholder="Date" />);
+    cy.mount(<InputMask mask="99/99/9999" placeholder="Date" />);
     cy.get(INPUT_SELECTOR).should(BE_VISIBLE);
   });
 });

@@ -3,6 +3,7 @@
 import { Controller, UseFormReturn } from 'react-hook-form';
 
 import { InputMask } from '@atoms/InputMask';
+import { maskCurrency } from '@utils/functions/maskCurrency';
 
 import { Step1FormData } from '@hooks/transactions/useTransactionForm.hook';
 
@@ -24,23 +25,30 @@ export const TransactionInfoSection = ({
         <Controller
           name="amount"
           control={step1Form.control}
-          render={({ field, fieldState }) => (
-            <div className="w-full">
-              <InputMask
-                mask="999.999.999,99"
-                maskChar={null}
-                placeholder={`${t('fields.amount')} *`}
-                required
-                error={fieldState.error?.message}
-                value={field.value ?? ''}
-                onChange={(e) => {
-                  const value = e.target.value.replace(/\D/g, '');
-                  field.onChange(value);
-                }}
-                onBlur={field.onBlur}
-              />
-            </div>
-          )}
+          render={({ field, fieldState }) => {
+            // Formata o valor para exibição usando a função maskCurrency
+            // O valor no form é armazenado como string de números (ex: "100000" para R$ 1.000,00)
+            const displayValue = field.value ? maskCurrency(String(field.value)) : '';
+            
+            return (
+              <div className="w-full">
+                <InputMask
+                  mask="999.999.999,99"
+                  maskChar={null}
+                  placeholder={`${t('fields.amount')} *`}
+                  required
+                  error={fieldState.error?.message}
+                  value={displayValue}
+                  onChange={(e) => {
+                    // Extrai apenas números do valor formatado
+                    const cleaned = e.target.value.replace(/\D/g, '');
+                    field.onChange(cleaned);
+                  }}
+                  onBlur={field.onBlur}
+                />
+              </div>
+            );
+          }}
         />
 
         <Controller

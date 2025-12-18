@@ -8,6 +8,6 @@ export interface InputMaskProps extends Omit<
   error?: string;
   helperText?: string;
   required?: boolean;
-  mask: string | Array<string | RegExp>;
+  mask: string | Array<string | RegExp> | 'currency';
   maskChar?: string | null;
 }

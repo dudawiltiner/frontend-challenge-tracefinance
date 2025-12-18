@@ -27,20 +27,6 @@ export const TransactionInformationForm = ({
 }: TransactionInformationFormProps) => {
   const t = useTranslations('transactions.createTransaction');
 
-  // eslint-disable-next-line no-console
-  console.log('=== TRANSACTION FORM ERROR PROPS ===');
-  // eslint-disable-next-line no-console
-  console.log('error:', error);
-  // eslint-disable-next-line no-console
-  console.log('errorMessage:', errorMessage);
-  // eslint-disable-next-line no-console
-  console.log('validationErrors:', validationErrors);
-  // eslint-disable-next-line no-console
-  console.log(
-    'Should show error:',
-    error || errorMessage || validationErrors.length > 0
-  );
-
   return (
     <div className="flex-1 flex flex-col relative overflow-hidden">
       <button
