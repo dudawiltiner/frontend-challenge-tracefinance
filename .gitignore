@@ -1,9 +1,21 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+/node_modules
+/dist
+.env
+/builds
+/cypress/results
+/cypress/screenshots
+/cypress/fixtures
+*terraform.*
+*.terraform*
+.idea
+
 
 # dependencies
 /node_modules
 /.pnp
 .pnp.js
+.yarn/install-state.gz
 
 # testing
 /coverage
@@ -23,7 +35,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
 # local env files
 .env*.local
@@ -33,3 +44,12 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+next-env.d.ts
+.DS_Store
+
+# pwa
+public/sw.js
+public/workbox-*.js
+public/sw.js.map
+public/workbox-*.js.map
+

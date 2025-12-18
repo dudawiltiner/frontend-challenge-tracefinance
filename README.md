@@ -1,347 +1,554 @@
-# 🚀 Front-end Challenge — Transaction Management
+# 📚 Documentação do Projeto - Trace Finance Challenge
 
-Desafio para avaliar engenheiros(as) front-end sênior na Trace Finance.
-
-## 📋 Sobre este Desafio
-
-Este desafio tem como objetivo avaliar suas habilidades em construir uma aplicação front-end moderna, escalável e testável, utilizando as principais tecnologias e padrões que adotamos na Trace Finance.
-
-Figma do teste: https://www.figma.com/design/YXzBTEwElRuxRVssHg465f/Teste-t%C3%A9cnico?node-id=0-1&m=dev&t=0krnC3qtatApObzH-1
-
-### 🔀 Como iniciar:
-
-1. **Projeto novo**: Crie um projeto Next.js do zero (recomendado)
-2. **Starter template**: Você pode usar qualquer template/boilerplate que preferir
+Este documento contém informações detalhadas sobre instalação, execução, testes e decisões técnicas do projeto. O desenvolvimento foi feito com auxílio de IA Cursor para ganho de agilidade e padronização, a partir de um template que eu mesma desenvolvi do zero sobre as ferramentas principais que não poderiam faltar.
 
 ---
 
-## 📝 Contexto
+## 🚀 Instalação
 
-Você deve construir uma aplicação de **gerenciamento de transações** com:
+### Pré-requisitos
 
-- ✅ **Formulário multi-step** para criar transações (2 etapas com sidebar)
-- ✅ **Listagem paginada** com filtros, pesquisa e paginação
+- **Node.js**: Versão 20.18.1 ou superior (recomendado: 20.x)
+- **npm**: Gerenciador de pacotes
+- **Git**: Para clonar o repositório
 
-A aplicação deve ser responsiva, testável e seguir as melhores práticas de desenvolvimento front-end.
+### Passos para Instalação
 
-### 📦 O que forneceremos:
+1. **Clone o repositório:**
 
-- ✅ Base URL da API com endpoints funcionais
-- ✅ Documentação dos endpoints
-- ✅ Exemplos de payloads
+   ```bash
+   git clone <url-do-repositório>
+   cd trace-finance-challenge
+   ```
 
-### 📊 Resumo Visual do Fluxo:
+2. **Instale as dependências:**
 
-```
-Listagem de Transações
-    ├─→ Filtros (Status, Currency, Data)
-    ├─→ Pesquisa
-    ├─→ Paginação
-    └─→ Botão "Nova Transação"
-         ↓
-    Formulário Multi-Step
-         ├─→ Step 1: Info Básicas (Descrição, Tipo, Valor, CPF/CNPJ)
-         └─→ Step 2: Detalhes (campos condicionais por tipo)
-              ↓
-         Submissão → API → Redirect para Listagem
-```
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
 
----
+3. **Configure as variáveis de ambiente:**
 
-## 🛠 Tecnologias (obrigatórias)
+   Crie um arquivo `.env.local` na raiz do projeto:
 
-### Core Stack
+   ```env
+   NEXT_PUBLIC_API_BASE_URL=https://fe-challenge-trace-api-production.up.railway.app
+   ```
 
-- **Framework**: Next.js 14+ (App Router ou Pages Router)
-- **Linguagem**: TypeScript
-- **Gerenciamento de Estado**: Zustand, Redux Toolkit ou Context API + hooks
-- **Formulários**: React Hook Form + Yup/Zod (validação)
-- **HTTP Client**: Axios, Fetch API, React query (diferencial) ou biblioteca de sua escolha
-- **Estilização**: Styled Components, Tailwind CSS, Stitches, PandaCSS, etc.
+4. **Configure o Husky (git hooks):**
 
-### Testing
+   O Husky é configurado automaticamente através do script `prepare` no `package.json` quando você executa `npm install`. Se precisar configurar manualmente:
 
-- **Testes Unitários/Integração**: Jest + Testing Library
+   **Opção 1 - Automática (recomendada):**
 
-### Código e Qualidade
+   ```bash
+   npm install
+   # O Husky será configurado automaticamente via script "prepare"
+   ```
 
-- **Linting**: ESLint com regras TypeScript
-- **Formatação**: Prettier
-- **Commits**: Conventional Commits (recomendado)
+   **Opção 2 - Manual:**
 
----
+   ```bash
+   npx husky init
+   ```
 
-## 🎯 Funcionalidades Obrigatórias
+   **Opção 3 - Se já tiver a pasta .husky:**
 
-### 1. Listagem de Transações (Página Principal)
-
-#### Interface
-
-**Tabela com colunas:**
-
-- ID
-- Tipo (PIX/TED)
-- Valor (formatado em BRL)
-- Status (badge colorido)
-- Data/Hora
-
-**Funcionalidades obrigatórias:**
-
-1. **Paginação**
-
-   - Controles: Infinite Scroll
-   - Exibir "Mostrando X-Y de Z resultados"
-
-2. **Filtros:**
-
-   - **Status** (Tab): Todos, Completed, Pending, Failed
-   - **Tipo** (select/dropdown): PIX, TED
-   - **Data** (date range picker): Período, de -> até, mês de inicio, mês de fim
-   - Botão "Aplicar Filtros"
-   - Botão "Limpar Filtros"
-   - Mostrar filtros ativos com componente de Badge
-
-3. **Estados:**
-
-   - Loading (skeleton table)
-   - Empty state (sem resultados)
-   - Error state (falha na API)
-
-5. **Botão "Nova Transação"**
-   - Redireciona para o formulário multi-step
+   ```bash
+   npx husky install
+   ```
 
 ---
 
-### 2. Formulário Multi-Step (Criar Transação)
+## ▶️ Como Rodar o Projeto
 
-Formulário com **2 etapas** e **sidebar lateral** indicando o step atual.
+### Modo Desenvolvimento
 
-#### Layout do Formulário
-
-**Desktop:**
-
-```
-┌─────────────────┬──────────────────────────────┐
-│  Sidebar        │  Área Principal              │
-│                 │                              │
-│  ● Step 1       │  [Campos do Step Ativo]      │
-│    Informações  │                              │
-│                 │                              │
-│  ○ Step 2       │                              │
-│    Detalhes     │                              │
-│                 │                              │
-│                 │[Voltar] [Próximo/Confirmar]  │
-└─────────────────┴──────────────────────────────┘
+```bash
+npm run dev
+# ou
+yarn dev
 ```
 
-**Mobile:**
+O projeto estará disponível em `http://localhost:3000`
 
-- Sidebar pode ficar horizontal no topo ou como stepper
-- Campos empilhados verticalmente
+### Build de Produção
 
-**Navegação:**
+```bash
+# Gerar build
+npm run build
 
-- Botão "Voltar": Retorna ao step anterior (ou página de listagem se no Step 1)
-- Botão "Próximo" (Step 1): Avança para Step 2
-- Botão "Confirmar" (Step 2): Submete o formulário
+# Rodar em produção
+npm start
+```
 
-#### Step 1 - Informações Básicas
+### Outros Comandos Úteis
 
-**Campos:**
+```bash
+# Verificar tipos TypeScript
+npm run check-types
 
-1. **Descrição** (input texto, **opcional**)
-2. **Tipo de Transação** (select, **obrigatório**)
-   - Opções: `PIX`, `TED`
-3. **Valor** (input texto, **obrigatório**, máscara de moeda BRL) BE trabalha em centavos
-4. **CPF/CNPJ** (input texto com máscara, **obrigatório**)
+# Verificar formatação
+npm run check-format
 
-**Comportamento:**
+# Formatar código
+npm run format
 
-- Botão "Próximo" habilitado apenas com campos obrigatórios válidos
-- Validação em tempo real (mostrar erros abaixo dos campos)
-- Não permitir avançar com campos inválidos
+# Verificar lint
+npm run check-lint
+```
 
-#### Step 2 - Detalhes da Transação
+### Commits Convencionais (Commitizen)
 
-**Campos condicionais baseados no "Tipo de Transação" do Step 1:**
+O projeto utiliza **Commitizen** com o padrão **Conventional Commits** para garantir commits padronizados e um histórico limpo.
 
-**Se PIX:**
+**Como usar:**
 
-- Chave PIX (input texto, obrigatório)
-- Tipo de Chave (select: CPF, Email, Telefone, Aleatória)
+```bash
+npm run commit
+```
 
-**Se TED:**
+Este comando abre um prompt interativo que guia você através da criação de um commit seguindo o padrão Conventional Commits:
 
-- Banco (select com lista de bancos)
-- Agência (input texto, obrigatório)
-- Conta (input texto, obrigatório)
-- Tipo de Conta (select: Corrente, Poupança)
+1. **Tipo de mudança**: Escolha entre `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, etc.
+2. **Escopo** (opcional): Módulo ou componente afetado (ex: `transactions`, `components`, `hooks`)
+3. **Descrição curta**: Breve descrição da mudança
+4. **Descrição longa** (opcional): Detalhes adicionais
+5. **Breaking changes** (opcional): Se a mudança quebra compatibilidade
+6. **Issues afetadas** (opcional): Números de issues relacionadas
 
-**Comportamento:**
+**Exemplo de commit gerado:**
 
-- **"Voltar"**: Retorna ao Step 1 com todos os dados preservados
-- **"Confirmar"**: Envia os dados para a API (endpoint fornecido)
-  - Modal de confirmação (diferencial)
-  - Após sucesso: Redireciona para listagem
-  - Após erro: Exibe mensagem de erro
-- **Ao retornar para o formulário após confirmação**: Campos limpos (reset completo)
+```
+feat(transactions): adiciona filtro por data
 
-**Validações:**
+Implementa filtro de data na listagem de transações com suporte a range de datas e filtros rápidos (hoje, semana, mês).
 
-- Todos os campos condicionais devem ter validação apropriada
-- Exibir mensagens de erro abaixo dos campos
+Closes #123
+```
 
----
+**Validação automática:**
 
-## 🌐 API (Fornecida)
+O projeto utiliza **Commitlint** configurado via Husky para validar automaticamente as mensagens de commit no hook `commit-msg`. As regras configuradas são:
 
-### Endpoints que forneceremos:
+- Escopo deve ter no mínimo 4 caracteres
+- Escopo deve estar em UPPER CASE
+- Seguir padrão Conventional Commits
 
-Api base url: `https://fe-challenge-trace-api-production.up.railway.App`
-Api prefix: `/api`
+**Benefícios:**
 
-Endpoints: `/transaction` (GET, POST)
-
-Todas as informações da api podem ser encontradas em [API_README.md](API_README.md)
-
-#### `GET /api/transactions`
-
-**Query Params:**
-
-- `page` (number): Página atual
-- `limit` (number): Items por página
-- `search` (string): Busca por descrição/ID
-- `status` (string): COMPLETED | PENDING | FAILED
-- `currency` (string): BRL | USD | EUR
-- `startDate` (string): Data início (ISO 8601)
-- `endDate` (string): Data fim (ISO 8601)
-
-Mostrar filtro ativo em formato de Badge
+- Histórico de commits organizado e legível
+- Geração automática de changelog
+- Facilita identificação de breaking changes
+- Melhor rastreabilidade de mudanças
 
 ---
 
-## 🎨 UI/UX Requirements
+## 🧪 Como Rodar os Testes
 
-### Design System
+### Testes Unitários (Jest)
 
-- Usar theme
-- Tokens para cores, fontes, etc.
-- Dark mode (diferencial)
-- Criar componentes customizados básicos
+```bash
+# Executar todos os testes
+npm test
 
-### Componentes Necessários
+# Modo watch (re-executa ao salvar arquivos)
+npm run test:watch
 
-- `Button` (primary, secondary)
-- `Input` / `InputMask` (para CPF/CNPJ, moeda)
-- `Select` / `Dropdown`
-- `DatePicker` (para filtro de data)
-- `Badge` (para status)
-- `Table`
-- `Skeleton` (loading states)
-- `EmptyState`
-- `Sidebar` (para o multi-step form)
+# Com cobertura de código
+npm run test:coverage
+```
 
-### Responsividade
+### Testes de Componentes (Cypress)
 
-- **Mobile** (< 768px): Stack vertical, sidebar do form pode ser horizontal no topo
-- **Desktop** (≥ 768px): Layout padrão com sidebar lateral
-- Tabela responsiva (scroll horizontal em mobile ou cards)
+```bash
+# Abrir interface gráfica do Cypress
+npm run cy:open
 
-## 🏗 Arquitetura e Boas Práticas
-
-### Padrões de Código
-
-- ✅ **DRY**: Não repetir código
-- ✅ **Single Responsibility**: Componentes com responsabilidade única
-- ✅ **Custom Hooks**: Extrair lógica reutilizável
-- ✅ **Type Safety**: Tipar tudo (evitar `any`)
-- ✅ **Validações**: Usar schemas (Yup/Zod)
-- ✅ **Error Handling**: Tratamento apropriado de erros
-
-## 🧪 Testes (Jest + Testing Library)
-
-## 📝 Pré-requisitos
-
-- ✅ Repositório privado no GitHub
-- ✅ TypeScript configurado
-- ✅ Next.js 14+
-- ✅ Todas as 3 funcionalidades implementadas:
-  - Formulário multi-step completo
-  - Listagem com filtros, pesquisa e paginação
-- ✅ Testes unitários
-- ✅ Formulários com validação
-- ✅ Gerenciamento de estado
-- ✅ Loading, error e empty states
-- ✅ Responsivo (mobile e desktop)
-- ✅ README com:
-  - Instruções de instalação
-  - Como rodar o projeto
-  - Como rodar os testes
-  - Variáveis de ambiente necessárias
-- ✅ Lint sem erros
-- ✅ Testes passando (`yarn test` ou `npm test`)
+# Executar testes de componentes
+npm run cy:run:component
+```
 
 ---
 
-## 🌟 Diferenciais (Seria Legal Ter)
+## 🏗 Principais Decisões Técnicas
 
-### Código e Arquitetura
+### 1. **Framework: Next.js 15 com App Router**
 
-- 🎯 Arquitetura modular bem organizada (feature-based)
-- 🎯 Custom hooks bem abstraídos e reutilizáveis
-- 🎯 Error Boundary implementado
-- 🎯 Abstrações de serviços HTTP (camada de API bem estruturada)
-- 🎯 Path aliases configurados no TypeScript
-- 🎯 Documentação de componentes (Storybook ou similar)
+**Escolha:** Next.js 15.3.6 com App Router (não Pages Router)
 
-### UX/UI
+**Justificativa:**
 
-- ✨ Dark mode
-- ✨ Botão para alteração de lingua
-- ✨ Animações e transições suaves
-- ✨ Toast notifications (feedback de ações)
-- ✨ Confirmação antes de submeter formulário
-- ✨ Skeleton screens customizados
+- **App Router** oferece melhor suporte a Server Components, layouts aninhados e streaming
+- **Next.js 15** traz melhorias de performance e suporte nativo a React 19
+- **Turbopack** (usado no dev mode) oferece build times significativamente mais rápidos
+- Suporte nativo a internacionalização com `next-intl`
+- Roteamento baseado em arquivos facilita organização e manutenção
 
-### Testing e Qualidade
+**Benefícios:**
 
-- 🧪 Cobertura de testes
-- 🔧 Husky + lint-staged
-- 🔧 Commitlint
-
-### Extras
-
-- 🌐 Internacionalização (PT/EN) - i18n
-- 🚀 Deploy em produção (Vercel, Netlify, etc.)
+- Melhor performance com Server Components
+- SEO otimizado com SSR/SSG
+- Code splitting automático
+- Otimização de imagens e assets
 
 ---
 
-## 📤 Submissão
+### 2. **Linguagem: TypeScript**
 
-1. ✅ Crie um fork do repositório
-2. ✅ Dê permissão de leitura para o usuário que indicarmos no repositório privado
-3. ✅ No README, inclua:
-   - Instruções de instalação
-   - Como rodar o projeto
-   - Como rodar os testes
-   - Principais decisões técnicas
-   - Tempo aproximado de desenvolvimento
-   - Melhorias futuras (se tiver)
+**Escolha:** TypeScript 5.3.3 com configuração estrita
 
----
+**Justificativa:**
 
-## ⏱️ Prazo
+- Type safety em tempo de compilação reduz bugs em produção
+- Melhor experiência de desenvolvimento com autocomplete e IntelliSense
+- Facilita refatoração e manutenção de código
+- Documentação implícita através de tipos
+- Path aliases configurados (`@/`, `@components/`, `@hooks/`, etc.) para imports mais limpos
 
-**2-3 dias** a partir do recebimento do desafio.
+**Configurações importantes:**
 
-Se precisar de mais tempo, entre em contato conosco.
+- `strict: true` para máxima segurança de tipos
+- Path aliases para melhor organização
+- Tipos compartilhados em `src/types/`
 
 ---
 
-## ❓ Dúvidas
+### 3. **Gerenciamento de Estado: React Query + Hooks Locais**
 
-Envie e-mail com o assunto **"Dúvida - Desafio Front-end"**.
+**Escolha:** TanStack React Query 5.74.4 para estado de servidor + React hooks locais para estado de UI
+
+**Justificativa:**
+
+- **React Query**: Gerenciamento automático de estado de servidor (cache, loading, error, refetch)
+- **Hooks Locais**: Para estado de UI simples (tema, formulários), utilizamos `useState` e `useContext` quando necessário
+- **Sem necessidade de Zustand/Redux**: O projeto não requer estado global complexo, apenas estado de servidor e estado local de componentes
+
+**Uso no projeto:**
+
+- **Estado de servidor**: React Query gerencia cache, loading states e sincronização de dados da API
+- **Estado de UI**: Hooks locais (`useState`) para estado de componentes (tema, formulários, filtros)
+- **Estado de formulários**: React Hook Form gerencia estado interno dos formulários
+
+**Benefícios:**
+
+- Menor bundle size (sem biblioteca de estado global adicional)
+- Estado de servidor gerenciado automaticamente
+- Estado de UI simples e direto com hooks nativos do React
 
 ---
 
-**Boa sorte! 🚀**
+### 4. **Formulários: React Hook Form + Zod**
+
+**Escolha:** React Hook Form 7.52.0 + Zod 3.24.3
+
+**Justificativa:**
+
+- **React Hook Form**: Performance superior (menos re-renders), validação controlada pelo desenvolvedor
+- **Zod**: Schema validation type-safe, inferência automática de tipos TypeScript
+- **Integração**: `@hookform/resolvers` conecta Zod ao RHF perfeitamente
+- Validação no cliente e possibilidade de reutilizar schemas no servidor
+
+**Benefícios:**
+
+- Validação declarativa e type-safe
+- Mensagens de erro customizáveis
+- Validação em tempo real sem impacto na performance
+- Schemas reutilizáveis entre frontend e backend
+
+---
+
+### 5. **HTTP Client: Axios + React Query**
+
+**Escolha:** Axios 1.7.9 + TanStack React Query 5.74.4
+
+**Justificativa:**
+
+- **Axios**: Interceptors para tratamento global de erros, cancelamento de requisições, melhor tratamento de erros HTTP
+- **React Query**: Cache inteligente, refetch automático, estados de loading/error/success, infinite scroll nativo
+- **Proxy API Route**: Criamos uma rota proxy (`/api/proxy/[...path]`) para evitar problemas de CORS e centralizar tratamento de erros
+
+**Arquitetura:**
+
+```
+Frontend → Axios → Next.js API Proxy → API Externa
+                ↓
+         React Query (cache, estados)
+```
+
+**Benefícios:**
+
+- Cache automático de requisições
+- Estados de loading/error gerenciados automaticamente
+- Infinite scroll com `useInfiniteQuery`
+- Retry automático em caso de falha
+- Deduplicação de requisições
+
+---
+
+### 6. **Estilização: Tailwind CSS**
+
+**Escolha:** Tailwind CSS 3.4.17 com design tokens customizados
+
+**Justificativa:**
+
+- **Utility-first**: Desenvolvimento rápido sem criar componentes CSS customizados para cada caso
+- **Design Tokens**: Sistema de cores, espaçamentos e tipografia centralizado em `src/design-tokens/`
+- **Dark Mode**: Suporte nativo com classe `dark:`
+- **Performance**: Purge automático de CSS não utilizado em produção
+- **Responsividade**: Breakpoints mobile-first integrados
+
+**Design System:**
+
+- Tokens de cores seguindo padrão da Trace Finance
+- Variáveis CSS para dark mode
+- Componentes base (Button, Input, Badge) seguindo Atomic Design
+
+---
+
+### 7. **Testes: Jest + Testing Library + Cypress**
+
+**Escolha:** Jest 29.7.0 + Testing Library 16.1.0 + Cypress 14.3.1
+
+**Justificativa:**
+
+- **Jest**: Framework de testes padrão do ecossistema React, rápido e confiável
+- **Testing Library**: Foco em testes orientados ao usuário (não detalhes de implementação)
+- **Cypress Component Testing**: Testes de componentes isolados com visualização em tempo real
+
+**Estratégia de Testes:**
+
+- **Unitários (Jest)**: Funções utilitárias, hooks customizados, helpers
+- **Componentes (Cypress)**: Componentes isolados com interações do usuário
+- **Integração**: Testes E2E podem ser adicionados futuramente
+
+---
+
+### 8. **Internacionalização: next-intl**
+
+**Escolha:** next-intl 4.6.0
+
+**Justificativa:**
+
+- Integração nativa com Next.js App Router
+- Suporte a rotas localizadas (`/pt/transactions`, `/en/transactions`)
+- Type-safe com TypeScript
+- Lazy loading de traduções
+- Formatação de datas, números e moedas
+
+**Implementação:**
+
+- Suporte a PT-BR e EN-US
+- Traduções organizadas por feature
+- Middleware para detecção automática de locale
+
+---
+
+### 9. **Arquitetura: Atomic Design + Feature-Based**
+
+**Escolha:** Combinação de Atomic Design para componentes e Feature-Based para organização
+
+**Estrutura:**
+
+```
+src/
+├── components/
+│   ├── atoms/          # Componentes básicos (Button, Input, Badge)
+│   ├── molecules/      # Componentes compostos (DatePicker, FilterPanel)
+│   └── organisms/      # Componentes complexos (TransactionsList, Form)
+├── screens/            # Páginas/Views
+├── hooks/              # Custom hooks organizados por feature
+├── services/           # Camada de API
+├── utils/              # Funções utilitárias
+└── types/              # Tipos TypeScript compartilhados
+```
+
+**Justificativa:**
+
+- **Atomic Design**: Facilita reutilização e manutenção de componentes
+- **Feature-Based**: Organização por funcionalidade facilita navegação
+- **Separação de responsabilidades**: Cada camada tem propósito claro
+- **Escalabilidade**: Fácil adicionar novas features sem poluir estrutura existente
+
+---
+
+### 10. **Qualidade de Código: ESLint + Prettier + Husky**
+
+**Escolha:** ESLint 8.57.1 + Prettier 3.2.5 + Husky 9.0.11 + Commitlint
+
+**Justificativa:**
+
+- **ESLint**: Regras TypeScript, Next.js e SonarJS para qualidade
+- **Prettier**: Formatação consistente automática
+- **Husky**: Git hooks para garantir qualidade antes do commit
+- **Commitlint**: Validação de mensagens de commit seguindo Conventional Commits
+- **Commitizen**: Ferramenta interativa para criar commits padronizados (`npm run commit`)
+
+**Hooks configurados:**
+
+- `pre-commit`: Lint e formatação automática
+- `pre-push`: Verificação de tipos e testes
+- `commit-msg`: Validação de mensagens de commit (Commitlint)
+
+**Commitizen:**
+
+O projeto utiliza **Commitizen** com `cz-conventional-changelog` para facilitar a criação de commits seguindo o padrão Conventional Commits. Use `npm run commit` para criar commits de forma interativa e padronizada.
+
+---
+
+### 11. **Máscaras de Input: react-imask**
+
+**Escolha:** react-imask 7.6.1 para CPF/CNPJ e moeda
+
+**Justificativa:**
+
+- Performance superior ao react-input-mask
+- Suporte a máscaras dinâmicas (CPF/CNPJ detecta automaticamente)
+- Melhor integração com React Hook Form
+- Validação integrada com máscara
+
+---
+
+### 12. **Dark Mode: Implementação Customizada**
+
+**Escolha:** Sistema de dark mode usando variáveis CSS e classe `dark`
+
+**Justificativa:**
+
+- Variáveis CSS permitem mudança de tema sem re-render
+- Suporte a preferência do sistema (`prefers-color-scheme`)
+- Toggle manual via componente
+- Sidebar e Header mantêm cores fixas (requisito de design)
+
+---
+
+## ⏱️ Tempo Aproximado de Desenvolvimento
+
+**Total:** ~24-30 horas distribuídas em 3 dias
+
+## 🚀 Melhorias Futuras
+
+### Curto Prazo
+
+1. **Testes E2E**
+   - Implementar testes end-to-end com Cypress
+   - Cobrir fluxos críticos (criar transação, filtrar, pesquisar)
+
+2. **Otimizações de Performance**
+   - Implementar virtualização na tabela para grandes volumes de dados
+   - Lazy loading de componentes pesados
+   - Otimização de imagens com next/image
+
+3. **Acessibilidade**
+   - Adicionar ARIA labels em todos os componentes
+   - Navegação por teclado completa
+   - Suporte a screen readers
+   - Testes com ferramentas de acessibilidade
+
+4. **Feedback Visual**
+   - Implementar toast notifications para ações do usuário
+   - Loading states mais granulares
+   - Animações de transição entre estados
+
+### Médio Prazo
+
+5. **Funcionalidades Adicionais**
+   - Exportação de transações (CSV, PDF)
+   - Histórico de ações do usuário
+   - Filtros salvos/favoritos
+   - Notificações em tempo real (WebSocket)
+
+6. **Monitoramento e Analytics**
+   - Integração com ferramentas de monitoramento (Sentry)
+   - Analytics de uso
+   - Performance monitoring
+
+7. **Documentação de Componentes**
+   - Storybook para documentação visual de componentes
+   - Exemplos de uso para cada componente
+   - Guia de contribuição
+
+### Longo Prazo
+
+8. **PWA (Progressive Web App)**
+   - Service Workers para offline
+   - Instalação como app
+   - Notificações push
+
+9. **Escalabilidade**
+   - Micro-frontends se necessário
+   - CDN para assets estáticos
+   - Otimização de bundle size
+
+---
+
+## 📝 Variáveis de Ambiente
+
+Crie um arquivo `.env.local` na raiz do projeto:
+
+```env
+# API Configuration
+NEXT_PUBLIC_API_BASE_URL=https://fe-challenge-trace-api-production.up.railway.app
+```
+
+---
+
+## 🔍 Scripts Disponíveis
+
+```bash
+# Desenvolvimento
+npm run dev              # Inicia servidor de desenvolvimento com Turbopack
+
+# Build e Produção
+npm run build            # Cria build de produção
+npm start                # Inicia servidor de produção
+
+# Qualidade de Código
+npm run check-types      # Verifica tipos TypeScript
+npm run check-format     # Verifica formatação
+npm run format           # Formata código automaticamente
+npm run check-lint       # Verifica lint
+
+# Testes
+npm test                 # Executa testes unitários
+npm run test:watch       # Modo watch dos testes
+npm run test:coverage    # Testes com cobertura
+npm run cy:open          # Abre Cypress
+npm run cy:run:component # Executa testes de componentes
+
+# Git Hooks
+npm run commit           # Commit interativo com Commitizen (Conventional Commits)
+                        # Abre prompt para criar commits padronizados
+```
+
+---
+
+## 📖 Estrutura do Projeto
+
+Para mais detalhes sobre a arquitetura, consulte [ARCHITECTURE.md](./src/ARCHITECTURE.md)
+
+---
+
+## 🎯 Resumo das Escolhas Técnicas
+
+| Categoria          | Tecnologia Escolhida    | Alternativas Consideradas   | Motivo da Escolha                     |
+| ------------------ | ----------------------- | --------------------------- | ------------------------------------- |
+| Framework          | Next.js 15 (App Router) | Pages Router                | Melhor performance, Server Components |
+| Linguagem          | TypeScript 5.3.3        | JavaScript                  | Type safety, melhor DX                |
+| Estado de Servidor | React Query             | SWR, Apollo Client          | Cache automático, estados gerenciados |
+| Estado de UI       | React Hooks (useState)  | Zustand, Redux, Context API | Simplicidade, sem dependência extra   |
+| Formulários        | React Hook Form + Zod   | Formik + Yup                | Performance, type-safety              |
+| HTTP Client        | Axios + React Query     | Fetch API                   | Cache, estados automáticos            |
+| Estilização        | Tailwind CSS            | Styled Components           | Desenvolvimento rápido, tokens        |
+| Testes Unitários   | Jest + Testing Library  | Vitest                      | Padrão do ecossistema React           |
+| Testes Componentes | Cypress                 | Playwright                  | Visualização em tempo real            |
+| i18n               | next-intl               | react-i18next               | Integração nativa Next.js             |
+| Máscaras           | react-imask             | react-input-mask            | Performance superior                  |
+| Linting            | ESLint + Prettier       | Biome                       | Padrão da indústria                   |
+| Git Hooks          | Husky + Commitlint      | -                           | Garantir qualidade                    |
+
+---
+
+**Documentação criada com foco em clareza e detalhamento técnico das decisões arquiteturais.**

@@ -1,0 +1,52 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "sonarjs"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:sonarjs/recommended",
+    "prettier",
+    "next"
+  ],
+  "ignorePatterns": [
+    "next-env.d.ts",
+    ".next/**",
+    "node_modules/**",
+    "cypress/**",
+    "**/*.cy.ts",
+    "**/*.cy.tsx",
+    "dist/**",
+    "build/**"
+  ],
+  "rules": {
+    "no-console": 2,
+    "max-lines": [
+      "error",
+      {
+        "max": 200,
+        "skipBlankLines": true,
+        "skipComments": true
+      }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "variable",
+        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+      },
+      {
+        "selector": "function",
+        "format": ["camelCase", "PascalCase"]
+      },
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "enum",
+        "format": ["PascalCase", "UPPER_CASE"]
+      }
+    ],
+    "@typescript-eslint/no-var-requires": 0
+  }
+}

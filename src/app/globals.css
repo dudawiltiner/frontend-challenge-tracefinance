@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-poppins: 'Poppins', system-ui, sans-serif;
+
+  /* Colors - Primary */
+  --color-primary-50: #e5fef7;
+  --color-primary-100: #ccfdf0;
+  --color-primary-500: #00f2b1;
+  --color-primary-600: #00d9a0;
+  --color-primary-700: #00c896;
+
+  /* Colors - Neutral */
+  --color-neutral-50: #f2f3f5;
+  --color-neutral-100: #e8e9ed;
+  --color-neutral-200: #d8dae0;
+  --color-neutral-300: #949494;
+  --color-neutral-400: #7c8597;
+  --color-neutral-500: #4a505b;
+  --color-neutral-600: #363636;
+  --color-neutral-700: #252525;
+  --color-neutral-800: #25282d;
+  --color-neutral-900: #121212;
+
+  /* Colors - Background */
+  --color-bg-light: #ffffff;
+  --color-bg-gray: #f2f3f5;
+  --color-bg-dark: #121212;
+  --color-bg-card: #ffffff;
+  --color-bg-card-dark: #252525;
+
+  /* Colors - Text */
+  --color-text-primary: #25282d;
+  --color-text-secondary: #7c8597;
+  --color-text-tertiary: #949494;
+  --color-text-placeholder: #a3aab6;
+  --color-text-light: #f3f3f3;
+  --color-text-dark: #000000;
+
+  /* Colors - Status */
+  --color-status-success-bg: #e7f8f2;
+  --color-status-success-text: #0a6f4d;
+  --color-status-warning-bg: #fffbed;
+  --color-status-warning-text: #977f2e;
+  --color-status-error-bg: #fee2e2;
+  --color-status-error-text: #dc2626;
+
+  /* Colors - Border */
+  --color-border-light: #e5e7eb;
+  --color-border-default: #d1d5db;
+  --color-border-input: #d8dae0;
+  --color-border-dark: #363636;
+
+  /* Colors - Sidebar (sempre mantém cores do light mode) */
+  --color-sidebar-bg: #121212;
+  --color-sidebar-item-active: #1b1b1b;
+  --color-sidebar-item-inactive: #363636;
+  --color-sidebar-text: #f3f3f3;
+  --color-sidebar-text-secondary: #949494;
+  --color-sidebar-icon: #f3f3f3;
+
+  /* Colors - Header (sempre mantém cores do light mode) */
+  --color-header-bg: #25282d;
+  --color-header-text: #ffffff;
+
+  /* Colors - Avatar */
+  --color-avatar-bg: #7ee9ff;
+  --color-avatar-text: #000000;
+
+  /* Colors - Filter Panel */
+  --color-filter-panel-bg: #f2f3f5;
+  --color-filter-panel-selected: #d8dae0;
+  --color-filter-panel-hover: #e8e9ed;
+  --color-filter-panel-icon: #7c8597;
+  --color-filter-panel-text: #25282d;
+}
+
+/* Dark Mode - Apenas o conteúdo principal muda, sidebar e header mantêm cores do light mode */
+.dark {
+  /* Colors - Background (apenas conteúdo principal) */
+  --color-bg-light: #1a1a1a;
+  --color-bg-gray: #1f1f1f;
+  --color-bg-dark: #121212;
+  --color-bg-card: #252525;
+  --color-bg-card-dark: #1a1a1a;
+
+  /* Colors - Text (apenas conteúdo principal) */
+  --color-text-primary: #f5f5f5; /* Mais claro para melhor contraste */
+  --color-text-secondary: #b8bcc8; /* Mais claro */
+  --color-text-tertiary: #a0a0a0; /* Mais claro */
+  --color-text-placeholder: #8b8b8b; /* Mais claro */
+  --color-text-light: #f3f3f3;
+  --color-text-dark: #000000; /* Mantém preto para botões verdes */
+
+  /* Colors - Neutral (mantém sidebar e header fixos, muda apenas conteúdo) */
+  --color-neutral-50: #1f1f1f;
+  --color-neutral-100: #2a2a2a; /* Mais claro para botões */
+  --color-neutral-200: #3a3a3a; /* Mais claro para melhor visibilidade */
+  --color-neutral-300: #4a4a4a; /* Mais claro */
+  --color-neutral-400: #8b8b8b; /* Mais claro para texto secundário */
+  --color-neutral-500: #9a9a9a; /* Mais claro */
+  --color-neutral-600: #b8b8b8; /* Mais claro para melhor legibilidade */
+  /* neutral-700, neutral-800, neutral-900 mantêm valores do light mode para sidebar e header */
+  /* Não redefinir neutral-700, neutral-800, neutral-900 para manter sidebar e header fixos */
+
+  /* Colors - Status */
+  --color-status-success-bg: #064e3b;
+  --color-status-success-text: #34d399;
+  --color-status-warning-bg: #78350f;
+  --color-status-warning-text: #fbbf24;
+  --color-status-error-bg: #7f1d1d;
+  --color-status-error-text: #f87171;
+
+  /* Colors - Border */
+  --color-border-light: #2a2a2a; /* Mais sutil */
+  --color-border-default: #2a2a2a; /* Mais sutil */
+  --color-border-input: #2a2a2a; /* Mesma cor do placeholder para bordas visíveis no dark mode */
+  --color-border-dark: #3a3a3a; /* Mais sutil */
+
+  /* Colors - Filter Panel */
+  --color-filter-panel-bg: #1f1f1f;
+  --color-filter-panel-selected: #2a2a2a;
+  --color-filter-panel-hover: #252525;
+  --color-filter-panel-icon: #a3aab6;
+  --color-filter-panel-text: #e5e5e5;
+
+  /* Sidebar e Header mantêm cores do light mode (não redefinir) */
+}
+
+body {
+  font-family: var(--font-poppins);
+}
+
+/* Placeholder color for select options */
+select option:disabled {
+  color: var(--color-text-placeholder);
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari and Opera */
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+  -webkit-appearance: none !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar-track {
+  display: none !important;
+  background: transparent !important;
+  width: 0px !important;
+  height: 0px !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar-thumb {
+  display: none !important;
+  background: transparent !important;
+  width: 0px !important;
+  height: 0px !important;
+}
