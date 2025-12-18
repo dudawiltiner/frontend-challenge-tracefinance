@@ -59,6 +59,17 @@ export const FilterSection = ({
   DateFilterDropdown,
   t,
 }: FilterSectionProps) => {
+  // Função para limpar todos os filtros
+  const handleClearAllFilters = () => {
+    onTypeFilterChange([]);
+    onCurrencyFilterChange([]);
+    onStartDateChange(undefined);
+    onEndDateChange(undefined);
+    onLocalTypeFilterChange([]);
+    onLocalCurrencyFilterChange([]);
+    onShowFilterPanelChange(false);
+  };
+
   return (
     <div
       className="flex flex-wrap items-center gap-2 md:gap-4 relative"
@@ -112,11 +123,7 @@ export const FilterSection = ({
               onEndDateChange(end);
               onShowFilterPanelChange(false);
             }}
-            onClear={() => {
-              onStartDateChange(undefined);
-              onEndDateChange(undefined);
-              onShowFilterPanelChange(false);
-            }}
+            onClear={handleClearAllFilters}
           />
         ) : activeFilter === 'method' ? (
           <MethodFilterPanel
@@ -124,6 +131,7 @@ export const FilterSection = ({
             onLocalTypeFilterChange={onLocalTypeFilterChange}
             onTypeFilterChange={onTypeFilterChange}
             onShowFilterPanelChange={onShowFilterPanelChange}
+            onClearAllFilters={handleClearAllFilters}
             t={t}
           />
         ) : (
@@ -132,6 +140,7 @@ export const FilterSection = ({
             onLocalCurrencyFilterChange={onLocalCurrencyFilterChange}
             onCurrencyFilterChange={onCurrencyFilterChange}
             onShowFilterPanelChange={onShowFilterPanelChange}
+            onClearAllFilters={handleClearAllFilters}
             t={t}
           />
         )}

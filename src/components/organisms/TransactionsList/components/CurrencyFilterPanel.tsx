@@ -7,6 +7,7 @@ interface CurrencyFilterPanelProps {
   onLocalCurrencyFilterChange: (value: Currency[]) => void;
   onCurrencyFilterChange: (value: Currency[]) => void;
   onShowFilterPanelChange: (value: boolean) => void;
+  onClearAllFilters?: () => void;
   t: (key: string) => string;
 }
 
@@ -15,6 +16,7 @@ export const CurrencyFilterPanel = ({
   onLocalCurrencyFilterChange,
   onCurrencyFilterChange,
   onShowFilterPanelChange,
+  onClearAllFilters,
   t,
 }: CurrencyFilterPanelProps) => {
   return (
@@ -54,9 +56,13 @@ export const CurrencyFilterPanel = ({
       <div className="absolute bottom-4 right-4 left-4 flex justify-end gap-2 pt-4 border-t border-neutral-200 bg-background-light">
         <button
           onClick={() => {
-            onLocalCurrencyFilterChange([]);
-            onCurrencyFilterChange([]);
-            onShowFilterPanelChange(false);
+            if (onClearAllFilters) {
+              onClearAllFilters();
+            } else {
+              onLocalCurrencyFilterChange([]);
+              onCurrencyFilterChange([]);
+              onShowFilterPanelChange(false);
+            }
           }}
           className="px-4 py-2 border border-border-input/50 text-text-primary rounded-lg hover:bg-neutral-100 font-sans font-medium text-xs leading-normal text-center align-middle"
         >

@@ -3,9 +3,10 @@
 import { Controller, UseFormReturn } from 'react-hook-form';
 
 import { InputMask } from '@atoms/InputMask';
-import { maskCurrency } from '@utils/functions/maskCurrency';
 
 import { Step1FormData } from '@hooks/transactions/useTransactionForm.hook';
+
+import { maskCurrency } from '@utils/functions/maskCurrency';
 
 interface TransactionInfoSectionProps {
   step1Form: UseFormReturn<Step1FormData>;
@@ -28,8 +29,10 @@ export const TransactionInfoSection = ({
           render={({ field, fieldState }) => {
             // Formata o valor para exibição usando a função maskCurrency
             // O valor no form é armazenado como string de números (ex: "100000" para R$ 1.000,00)
-            const displayValue = field.value ? maskCurrency(String(field.value)) : '';
-            
+            const displayValue = field.value
+              ? maskCurrency(String(field.value))
+              : '';
+
             return (
               <div className="w-full">
                 <InputMask

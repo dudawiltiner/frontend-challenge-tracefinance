@@ -67,6 +67,11 @@ export const DateFilterDropdown: React.FC<DateFilterDropdownProps> = ({
           return a.month - b.month;
         })
       );
+    } else {
+      // Reset estados locais quando as datas são limpas
+      setSelectedMonths([]);
+      setPeriod('');
+      setSelectedYear(new Date().getFullYear());
     }
   }, [startDate, endDate]);
 
